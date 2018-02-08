@@ -3,14 +3,14 @@ var stopButt = document.getElementById("stop");
 var clearButt = document.getElementById("clear");
 var ctx = canvas.getContext('2d');
 ctx.fillStyle = "pink";
-var rad = 40;
+var rad = 0;
 var grow = true;
 
 var requestID;
 
-//var animate = function(e){
+var animate = function(e){
 
-  //  window.cancelAnimationFrame(requestID);
+    onOff();
     
     var circleDraw = function(e){
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -42,13 +42,17 @@ var requestID;
 	
 	
     }
-//}
+
+    circleDraw();
+}
 
 var onOff = function(e){
     window.cancelAnimationFrame(requestID);
 }
 
 stopButt.addEventListener("click", onOff);
+
+canvas.addEventListener("click", animate);
 
 window.requestAnimationFrame(circleDraw);
 
