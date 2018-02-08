@@ -4,18 +4,26 @@ var clearButt = document.getElementById("clear");
 var growButt = document.getElementById("grow");
 var dvdButt = document.getElementById("dvd");
 var ctx = canvas.getContext('2d');
-ctx.fillStyle = "pink";
+
 var rad = 0;
 var grow = true;
 
-var xVel = 1;
-var yVel = 1;
-var posX = canvas.width/2;
-var posY = canvas.height/2;
+image = document.getElementById("dvdimg");
+
+var xVel = Math.floor(Math.random() * 5 + 1);
+var yVel = Math.floor(Math.random() * 5 + 1);
+var posX = Math.floor(Math.random() * 300 + 100);
+var posY = Math.floor(Math.random() * 300 + 100);
 
 var requestID;
 
 var animate = function(e){
+    
+    ctx.fillStyle = "pink";
+    xVel = Math.floor(Math.random() * 5 + 1);
+    yVel = Math.floor(Math.random() * 5 + 1);
+    posX = Math.floor(Math.random() * 300 + 100);
+    posY = Math.floor(Math.random() * 300 + 100);
 
     onOff();
     
@@ -60,45 +68,75 @@ var onOff = function(e){
 var clear = function(e){
     onOff();
     rad = 0;
+    xVel = Math.floor(Math.random() * 5 + 1);
+    yVel = Math.floor(Math.random() * 5 + 1);
+    posX = Math.floor(Math.random() * 300 + 100);
+    posY = Math.floor(Math.random() * 300 + 100);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-var bounce = function(e){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+var dvd = function(e){
 
-    ctx.beginPath();
-    ctx.arc(posX, posY, 25, 0, 2 * Math.PI);
-    //ctx.stroke();
-    ctx.fill();
+    ctx.fillStyle = "orange";
+    rad = 0;
 
-    if(xVel > 0){
-	if(posX < canvas.width){
-	    posX += xVel;
+    onOff();
+
+    var bounce = function(e){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	ctx.beginPath();
+	ctx.drawImage(image, posX, posY, 150, 120);
+	//ctx.stroke();
+	ctx.fill();
+	
+	if(xVel > 0){
+	    if(posX < 360){
+		posX += xVel;
+	    }
+	    else{
+		xVel *= -1;
+	    }
 	}
-	else{
-	    xVel *= -1;
+	else if(xVel < 0){
+	    if(posX > -5){
+		posX += xVel;
+	    }
+	    else{
+		xVel *= -1;
+	    }
 	}
+	if(yVel > 0){
+	    if(posY < 410){
+		posY += yVel;
+	    }
+	    else{
+		yVel *= -1;
+	    }
+	}
+	else if(yVel < 0){
+	    if(posY > -30){
+		posY += yVel;
+	    }
+	    else{
+		yVel *= -1;
+	    }
+	}
+	
+	requestID = window.requestAnimationFrame(bounce);
+	console.log(requestID);
     }
-    else if(xVel < 0){
-	if(posX > 0){
-	    posX += xVel;
-	}
-	else{
-	    xVel *= -1;
-	}
-    }
 
-    requestID = window.requestAnimationFrame(bounce);
-    console.log(requestID);
+    bounce();
+
 }
-
 stopButt.addEventListener("click", onOff);
 
 clearButt.addEventListener("click", clear);
 
 growButt.addEventListener("click", animate);
 
-dvdButt.addEventListener("click", bounce);
+dvdButt.addEventListener("click", dvd);
 
 window.requestAnimationFrame(circleDraw);
 

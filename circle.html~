@@ -24,10 +24,6 @@
     <button id="grow">Grow</button>
     <button id="dvd">DVD</button>
 
-    <div style="display:none;">
-      <img id="dvdimg" src="https://images.vexels.com/media/users/3/143400/isolated/preview/992599758a1b913574417e3ce37c3c37-golden-dvd-logo-by-vexels.png" width="30" height="20">
-    </div>
-
     <script src="circle.js"></script>
   </body>
   
